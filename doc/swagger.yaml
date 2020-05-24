@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+    title: Sample API
+    description: this is experimental project
+    version: 0.0.1
+servers:
+    - url: http://localhost:3000
+      description: localhost service this is inside of docker
+
+paths:
+    /user:
+        post:
+            summary: Adds a new user
+            tags:
+                - user
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                email:
+                                    type: string
+                                mobile:
+                                    type: string
+                                password:
+                                    type: string
+                            example:
+                                name: Jessica Smith
+                                email: jessica@gmail.com
+                                mobile: '+9891234567'
+                                password: '123456'
+            responses:
+                '200':
+                    description: OK
+                '400':
+                    description: Error
+    /post:
+        post:
+            summary: Adds a new post
+            description: add new post by user
+            tags:
+                - post
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                title:
+                                    type: string
+                                description:
+                                    type: string
+                                text:
+                                    type: string
+                            example:
+                                title: 'some title'
+                                description: 'some description'
+                                text: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
+            responses:
+                '200':
+                    description: OK
+                '400':
+                    description: Error
+        get:
+            summary: fetch all of posts
+            description: get all of posts
+            tags:
+                - post
+            responses:
+                '200':
+                    description: OK
+                '400':
+                    description: Error
+
+components:
+    schemas:
+        User:
+            type: object
+            properties:
+                name:
+                    type: string
+                email:
+                    type: string
+                mobile:
+                    type: string
+                password:
+                    type: string
+        Post:
+            type: object
+            properties:
+                title:
+                    type: string
+                description:
+                    type: string
+                text:
+                    type: string
