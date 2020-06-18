@@ -6,11 +6,14 @@ info:
 servers:
     - url: http://localhost:3000
       description: localhost service this is inside of docker
+    - url: http://localhost:3001
+      description: localhost for debug
 
 paths:
-    /user:
+    /user/sign-up:
         post:
-            summary: Adds a new user
+            summary: user register
+            description: this is sign up for an user
             tags:
                 - user
             requestBody:
@@ -37,8 +40,34 @@ paths:
                     description: OK
                 '400':
                     description: Error
+    /user/login:
+        post:
+            summary: user login
+            description: this is login for an user
+            tags:
+                - user
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                password:
+                                    type: string
+                            example:
+                                email: jessica@gmail.com
+                                password: '123456'
+            responses:
+                '200':
+                    description: OK
+                '400':
+                    description: Error
     /post:
         post:
+            security:
+                - bearerAuth: []
             summary: Adds a new post
             description: add new post by user
             tags:
@@ -76,6 +105,11 @@ paths:
                     description: Error
 
 components:
+    securitySchemes:
+        bearerAuth: # arbitrary name for the security scheme
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
     schemas:
         User:
             type: object

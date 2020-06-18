@@ -9,8 +9,9 @@ const cors = require('cors');
 
 const swaggerDocument = YAML.load('./doc/swagger.yaml');
 const { userRoutes, postRoutes } = require('./route');
+const errorHandler = require('./util/errorHandler');
 
-const mongoDB = 'mongodb://mongo/exp';
+const mongoDB = config.get('db');
 const app = express();
 const port = config.get('port');
 
@@ -20,11 +21,12 @@ const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.use(helmet.hidePoweredBy({setTo:'Go'}))
 app.use(bodyParser.json());
+app.use(helmet.hidePoweredBy({ setTo: 'Go' }));
 app.use(cors());
 app.use('/user', userRoutes);
 app.use('/post', postRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`app listening on ${port} port!`));

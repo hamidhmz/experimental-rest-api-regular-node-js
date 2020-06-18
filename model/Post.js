@@ -15,10 +15,10 @@ const postSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	// userId: {
-	// 	type: Schema.Types.ObjectId,
-	// 	ref: 'User',
-	// },
+	userId: {
+		type: Schema.Types.ObjectId,
+		ref: 'User',
+	},
 });
 
 const validatorSchema = {
