@@ -1,13 +1,6 @@
-const ok = (data, message) => ({
-	status: 'success',
-	data,
-	message,
-});
+const responseObject = status => (data, message) => ({ status, data, message });
 
-const fail = (error, message) => ({
-	status: 'fail',
-	data: error,
-	message,
-});
+const ok = responseObject('success');
+const fail = responseObject('fail');
 
 module.exports = { fail, ok };
