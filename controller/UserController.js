@@ -62,14 +62,14 @@ async function login(req, res, next) {
 		if (!(await compare(data.password, user.password))) {
 			throw { status: 401 };
 		}
-		const result = {};
-		result.token = user.generateAuthToken();
+
+		const result = user;
+		result.token = await user.generateAuthToken();
 		res.send(ok(userSerializer(result), 'user successfully log in.'));
 	} catch (error) {
 		switch (error.status) {
 			case 401:
 				res.status(error.status).send(fail(undefined, 'Authentication fails.'));
-				// res.send(fail(undefined, 'Authentication fails.')).status(400);
 				break;
 			case 404:
 				res.status(error.status).send(fail(undefined, 'not found!'));

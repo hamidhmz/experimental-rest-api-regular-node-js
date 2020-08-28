@@ -25,10 +25,14 @@ const userSchema = new mongoose.Schema({
 	},
 });
 
-userSchema.methods.generateAuthToken = function () {
+userSchema.methods.generateAuthToken = async function () {
 	return jwt.sign({ _id: this._id, email: this.email }, config.get('jwt'), {
 		expiresIn: '10h',
 	});
+};
+
+userSchema.statics.verifyAuthToken = async function (token) {
+	return jwt.verify(token, config.get('jwt'));
 };
 
 const validatorSchema = {

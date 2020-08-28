@@ -94,6 +94,8 @@ paths:
                 '400':
                     description: Error
         get:
+            security:
+                - bearerAuth: []
             summary: fetch all of posts
             description: get all of posts
             tags:
